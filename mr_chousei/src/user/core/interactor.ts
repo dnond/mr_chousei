@@ -1,7 +1,7 @@
 import { UserPresenter } from "./presenter"
 import { UserRepository } from "./repository"
 
-export const userInteractor = (repository: UserRepository, presenter: UserPresenter) => {
+export const createUserInteractor = (repository: UserRepository, presenter: UserPresenter) => {
   const login = (nickname: string) => {
     repository.login(nickname)
     presenter.setNickname(repository.getCurrentUserNickname())
@@ -9,3 +9,5 @@ export const userInteractor = (repository: UserRepository, presenter: UserPresen
 
   return { login }
 }
+
+export type UserInteractor = ReturnType<typeof createUserInteractor>

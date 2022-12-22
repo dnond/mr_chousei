@@ -1,4 +1,4 @@
-export const userPresenter = () => {
+export const createUserPresenter = () => {
   let nickname: string
 
   const getNickname = () => {
@@ -12,4 +12,4 @@ export const userPresenter = () => {
   return { getNickname, setNickname }
 }
 
-export type UserPresenter = ReturnType<typeof userPresenter>
+export type UserPresenter = ReturnType<typeof createUserPresenter>

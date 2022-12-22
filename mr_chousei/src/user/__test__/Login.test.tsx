@@ -1,41 +1,50 @@
-import { userInteractor } from "../core/interactor"
-import { userPresenter } from "../core/presenter"
-import { userRepository, UserRepository } from "../core/repository"
+import { createUserPresenter } from "../core/presenter"
+import { userRepository } from "../core/repository"
+import { createStore } from "../../store"
+import { selectNickname } from "../store/selectors"
+import { login } from "../store/actions"
+import { render, screen } from "@testing-library/react"
+import { App } from "../../App"
+import userEvent from "@testing-library/user-event"
 
 describe('login', () => {
-  it('can login', () => {
+  it('can login', async () => {
     const steps = createSteps()
 
     steps.givenUsers([
-      'alice',
-      'bob',
-      'chris'
+      'Alice',
+      'Bob',
+      'Chris'
     ])
-    steps.whenUserLogin('alice')
-    steps.thenLoggedUserIs('alice')
+    await steps.whenUserLogin('Alice')
+    await steps.thenLoggedUserIs('Alice')
   })
 })
 
 const createSteps = () => {
   const repository = userRepository()
-  const presenter = userPresenter()
-  const interactor = userInteractor(repository, presenter)
 
   const givenUsers = (initialNicknameList: string[]) => {
     repository.initUsers(initialNicknameList)
+
+    render(<App userRepository={repository}/>)
   }
 
-  const whenUserLogin = (nickname: string) => {
-    interactor.login(nickname)
-    // ニックネームに合致した入力があればログインOK
+  const whenUserLogin = async (nickname: string) => {
+
+    const nicknameInput = screen.getByRole("textbox", { name: "Nickname" })
+    const loginButton = screen.getByRole("button", { name: "Login" })
+
+    await userEvent.type(nicknameInput, nickname)
+    await userEvent.click(loginButton)
+
   }
 
-  const thenLoggedUserIs = (nickname: string) => {
-    expect(presenter.getNickname()).toBe(nickname)
+  const thenLoggedUserIs = async (nickname: string) => {
+    const loggedInformation = await screen.findByRole("banner")
+
+    expect(loggedInformation).toHaveTextContent("Logged User: " + nickname)
   }
 
   return { thenLoggedUserIs, whenUserLogin, givenUsers }
 }
-
-
-
