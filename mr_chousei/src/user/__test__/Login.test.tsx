@@ -1,5 +1,5 @@
 import { createUserPresenter } from "../core/presenter"
-import { userRepository } from "../core/repository"
+import { createUserRepository } from "../core/repository"
 import { createStore } from "../../store"
 import { selectNickname } from "../store/selectors"
 import { login } from "../store/actions"
@@ -22,7 +22,7 @@ describe('login', () => {
 })
 
 const createSteps = () => {
-  const repository = userRepository()
+  const repository = createUserRepository()
 
   const givenUsers = (initialNicknameList: string[]) => {
     repository.initUsers(initialNicknameList)
