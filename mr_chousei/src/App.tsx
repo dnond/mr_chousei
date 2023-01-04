@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { User } from "./user/component/User"
-import { UserRepository, userRepository } from "./user/core/repository"
+import { UserRepository } from "./user/core/repository"
 import { createUserPresenter } from "./user/core/presenter"
 import { createStore } from "./store"
 import { Provider } from "react-redux"

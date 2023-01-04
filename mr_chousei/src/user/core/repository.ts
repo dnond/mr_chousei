@@ -1,4 +1,4 @@
-export const userRepository = () => {
+export const createUserRepository = () => {
   let nicknameList: string[]
   let isLoggedUserNickname: string
 

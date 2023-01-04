@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {App} from './App'
-import { userRepository } from './user/core/repository'
+import { createUserRepository } from './user/core/repository'
 
-const repository = userRepository()
+const repository = createUserRepository()
 repository.initUsers([
     'Alice',
     'Bob',
