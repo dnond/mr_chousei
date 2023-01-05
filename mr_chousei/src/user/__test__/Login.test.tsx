@@ -1,11 +1,7 @@
-import { createUserPresenter } from "../core/presenter"
-import { createUserRepository } from "../core/repository"
-import { createStore } from "../../store"
-import { selectNickname } from "../store/selectors"
-import { login } from "../store/actions"
 import { render, screen } from "@testing-library/react"
 import { App } from "../../App"
 import userEvent from "@testing-library/user-event"
+import { createRepositories } from "../../__test__/createRepositories"
 
 describe('login', () => {
   it('can login', async () => {
@@ -22,14 +18,12 @@ describe('login', () => {
 })
 
 const createSteps = () => {
-  const repository = createUserRepository()
-
   const givenUsers = (initialNicknameList: string[]) => {
-    repository.initUsers(initialNicknameList)
+    const { eventScheduleRepository, userRepository } = createRepositories()
 
-    const eventScheduleRepository = createEventScheduleRepository()
+    userRepository.initUsers(initialNicknameList)
 
-    render(<App userRepository={repository}/>)
+    render(<App userRepository={userRepository} eventScheduleRepository={eventScheduleRepository}/>)
   }
 
   const whenUserLogin = async (nickname: string) => {

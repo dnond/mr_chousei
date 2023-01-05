@@ -83,3 +83,5 @@ export type Dispatch = ThunkDispatch<
   },
   AnyAction
 >;
+
+export type Store = ReturnType<typeof createStore>

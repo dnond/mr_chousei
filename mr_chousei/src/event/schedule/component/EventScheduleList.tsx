@@ -1,6 +1,5 @@
 import { FC } from "react"
 import { useSelector } from "react-redux"
-import { EventSchedule, AvailabilityEnum } from "../core/entities"
 import { selectEventSchedules } from "../store/selectors"
 import { EventScheduleItem } from "./EventScheduleItem"
 
