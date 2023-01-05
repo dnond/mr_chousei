@@ -1,4 +1,4 @@
-import { AvailabilityEnum, EventSchedule } from "./entities";
+import { EventSchedule } from "./entities";
 
 export const createEventSchedulesPresenter = () => {
   let eventSchedules: EventSchedule[];

@@ -20,7 +20,7 @@ export const createEventScheduleRepository = () => {
   };
 
   const getAll = () => {
-    return eventSchedules;
+    return eventSchedules || [];
   };
 
   return {
