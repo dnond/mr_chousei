@@ -27,6 +27,8 @@ const createSteps = () => {
   const givenUsers = (initialNicknameList: string[]) => {
     repository.initUsers(initialNicknameList)
 
+    const eventScheduleRepository = createEventScheduleRepository()
+
     render(<App userRepository={repository}/>)
   }
 

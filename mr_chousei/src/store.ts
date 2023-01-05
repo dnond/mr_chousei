@@ -32,7 +32,7 @@ export const createStore = (
     eventSchedulesPresenter
   );
 
-  const eventSlice = createEventSlice();
+  const eventSlice = createEventSlice(eventScheduleRepository.getAll());
 
   const rootReducer = combineReducers({
     [userSlice.name]: userSlice.reducer,

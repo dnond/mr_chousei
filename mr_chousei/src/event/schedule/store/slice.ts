@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import { EventSchedule } from "../core/entities";
 import { chooseAvailabilityOption } from "./actions";
 
-export const createEventSlice = () => {
+export const createEventSlice = (initialSchedules: EventSchedule[]) => {
   return createSlice({
     name: "event",
     initialState: {
-      schedules: new Array<EventSchedule>(),
+      schedules: initialSchedules,
     },
     reducers: {},
     extraReducers: (builder) => {

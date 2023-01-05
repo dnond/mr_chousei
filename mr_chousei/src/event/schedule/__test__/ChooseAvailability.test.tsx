@@ -10,6 +10,10 @@ import { createUserRepository } from "../../../user/core/repository";
 import { createUserPresenter } from "../../../user/core/presenter";
 import { chooseAvailabilityOption } from "../store/actions";
 import { selectEventScheduleAvailabilityState } from "../store/selectors";
+import { render, screen, within } from "@testing-library/react";
+import { FC } from "react";
+import userEvent from "@testing-library/user-event";
+import { App } from "../../../App";
 
 describe("Choose Availability", () => {
   it("User can choose availability", async () => {
@@ -38,30 +42,18 @@ describe("Choose Availability", () => {
   });
 });
 
-const createFakeStore = () => {
-  const userRepository = createUserRepository();
-  const userPresenter = createUserPresenter();
-  const eventScheduleRepository = createEventScheduleRepository();
-  const eventSchedulePresenter = createEventSchedulesPresenter();
-
-  return {
-    store: createStore(
-      userRepository,
-      userPresenter,
-      eventScheduleRepository,
-      eventSchedulePresenter
-    ),
-    eventScheduleRepository,
-  };
-};
-
 const createSteps = () => {
-  const { store, eventScheduleRepository: repository } = createFakeStore();
-
   const givenEventScheduleOption = (
     initializedEventSchedules: EventSchedule[]
   ) => {
-    repository.init(initializedEventSchedules);
+    const eventScheduleRepository = createEventScheduleRepository();
+    const userRepository = createUserRepository()
+    const eventSchedulePresenter = createEventSchedulesPresenter()
+    const userPresenter = createUserPresenter()
+
+    eventScheduleRepository.init(initializedEventSchedules);
+
+    render(<App userRepository={userRepository} eventScheduleRepository={eventScheduleRepository}/>)
   };
 
   const whenUserChooseAvailabilityOption = async (
@@ -74,6 +66,12 @@ const createSteps = () => {
         availabilityOption: availabilityStateOption,
       })
     );
+
+    const eventSchedulesList = screen.getByRole('list')
+    const eventSchedulesItem = within(eventSchedulesList).getByRole("heading", {name: 'Mon Jan 02 2023'}).parentElement!
+    const radioOk = within(eventSchedulesItem).getByRole("radio", {name: 'OK'})
+
+    // userEvent.click(radioOk)
   };
 
   const thenUserAvailabilityStateIs = (
@@ -81,10 +79,15 @@ const createSteps = () => {
     expectedAvailabilityState: AvailabilityEnum
   ) => {
     const eventScheduleAvailabilityState = selectEventScheduleAvailabilityState(
-      store.getState(),
       id
-    );
+    )(store.getState());
+
+    const eventSchedulesList = screen.getByRole('list')
+    const eventSchedulesItem = within(eventSchedulesList).getByRole("heading", {name: 'Mon Jan 02 2023'}).parentElement!
+    const radioOk = within(eventSchedulesItem).getByRole("radio", {name: 'OK'})
+
     expect(eventScheduleAvailabilityState).toBe(expectedAvailabilityState);
+    expect(radioOk).toBeChecked()
   };
 
   return {
