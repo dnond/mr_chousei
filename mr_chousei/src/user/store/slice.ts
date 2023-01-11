@@ -1,11 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { UserRepository } from "../core/repository"
 import { login } from "./actions"
 
-export const createUserSlice = () => {
+export const createUserSlice = (userRepository: UserRepository) => {
   return createSlice({
     name: 'user',
     initialState: {
-      nickname: ''
+      nickname: userRepository.getCurrentUserNickname() || ''
     },
     reducers: {},
     extraReducers: (builder) => {

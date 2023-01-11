@@ -3,6 +3,8 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { App } from "../../../App";
 import { createRepositories } from "../../../__test__/createRepositories";
+import { useReducer } from "react";
+import { MemoryRouter } from "react-router-dom";
 
 describe("Choose Availability", () => {
   it("User can choose availability", async () => {
@@ -37,9 +39,18 @@ const createSteps = () => {
   ) => {
     const { eventScheduleRepository, userRepository } = createRepositories()
 
+    userRepository.initUsers(
+      [
+        'Alice',
+        'Bob',
+        'Chris'
+      ]
+    )
+    userRepository.login("Alice")
+
     eventScheduleRepository.init(initializedEventSchedules);
 
-    render(<App userRepository={userRepository} eventScheduleRepository={eventScheduleRepository}/>)
+    render(<App userRepository={userRepository} eventScheduleRepository={eventScheduleRepository} Router={MemoryRouter}/>)
   };
 
   const whenUserChooseAvailabilityOption = async (
