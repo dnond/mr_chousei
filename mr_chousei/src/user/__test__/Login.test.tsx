@@ -1,8 +1,7 @@
-import { render, screen } from "@testing-library/react"
-import { App } from "../../App"
+import { screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { createRepositories } from "../../__test__/createRepositories"
-import { MemoryRouter, redirect } from "react-router-dom"
+import { initTest } from "../../__test__/initTest"
+import { createUserRepository } from "../core/repository"
 
 describe('login', () => {
   it('can login', async () => {
@@ -20,11 +19,10 @@ describe('login', () => {
 
 const createSteps = () => {
   const givenUsers = (initialNicknameList: string[]) => {
-    const { eventScheduleRepository, userRepository } = createRepositories()
+    const userRepository = createUserRepository()
 
     userRepository.initUsers(initialNicknameList)
-
-    render(<App userRepository={userRepository} eventScheduleRepository={eventScheduleRepository} Router={MemoryRouter} />)
+    initTest({userRepository})
   }
 
   const whenUserLogin = async (nickname: string) => {

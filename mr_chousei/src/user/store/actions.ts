@@ -11,3 +11,13 @@ export const login = createAsyncThunk<
 
   return extra.user.presenter.getNickname()
 })
+
+export const logout = createAsyncThunk<
+  string,
+  void,
+  { extra: { user: { interactor: UserInteractor, presenter: UserPresenter } } }
+>("user/login", (_, { extra }) => {
+  extra.user.interactor.logout()
+
+  return extra.user.presenter.getNickname()
+})
