@@ -1,10 +1,8 @@
 import { EventSchedule, AvailabilityEnum } from "../core/entities";
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { App } from "../../../App";
 import { createRepositories } from "../../../__test__/createRepositories";
-import { useReducer } from "react";
-import { MemoryRouter } from "react-router-dom";
+import { initTest } from "../../../__test__/initTest";
 
 describe("Choose Availability", () => {
   it("User can choose availability", async () => {
@@ -50,7 +48,7 @@ const createSteps = () => {
 
     eventScheduleRepository.init(initializedEventSchedules);
 
-    render(<App userRepository={userRepository} eventScheduleRepository={eventScheduleRepository} Router={MemoryRouter}/>)
+    initTest({userRepository, eventScheduleRepository})
   };
 
   const whenUserChooseAvailabilityOption = async (
