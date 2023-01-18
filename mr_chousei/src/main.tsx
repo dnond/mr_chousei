@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { BrowserRouter } from 'react-router-dom'
 import {App} from './App'
 import { createEventScheduleRepository } from './event/schedule/core/repository'
 import { createUserRepository } from './user/core/repository'
@@ -33,6 +34,6 @@ eventScheduleRepository.init(
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <App userRepository={userRepository} eventScheduleRepository={eventScheduleRepository}/>
+    <App userRepository={userRepository} eventScheduleRepository={eventScheduleRepository} Router={BrowserRouter} />
   </React.StrictMode>,
 )

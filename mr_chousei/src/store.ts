@@ -26,7 +26,7 @@ export const createStore = (
   eventSchedulesPresenter: EventSchedulesPresenter
 ) => {
   const interactor = createUserInteractor(repository, presenter);
-  const userSlice = createUserSlice();
+  const userSlice = createUserSlice(repository);
   const eventScheduleInteractor = createEventScheduleInteractor(
     eventScheduleRepository,
     eventSchedulesPresenter
